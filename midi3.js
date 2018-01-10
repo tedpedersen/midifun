@@ -23,4 +23,4 @@ function onMIDIFailure(msg) {
 
 // navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
 
-navigator.requestMIDIAccess().then(success).catch(failure);
+// navigator.requestMIDIAccess().then(success).catch(failure);
