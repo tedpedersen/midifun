@@ -21,4 +21,6 @@ function onMIDIFailure(msg) {
   console.log( "Failed to get MIDI access - " + msg );
 }
 
-navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
+// navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
+
+navigator.requestMIDIAccess().then(success).catch(failure);
