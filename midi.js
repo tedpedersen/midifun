@@ -1,16 +1,24 @@
-// to tell how many entries there are:
-    var numberOfMIDIInputs = inputs.size;
+var midi = null;  // global MIDIAccess object
+var output = null;
 
-    // add each of the ports to a <select> box
-    inputs.forEach( function( key, port ) {
-      var opt = document.createElement("option");
-      opt.text = port.name;
-      document.getElementById("inputportselector").add(opt);
-    });
+function echoMIDIMessage( event ) {
+  if (output) {
+    output.send( event.data, event.timestamp );
+  }
+}
 
-    // or you could express in ECMAScript 6 as:
-    for (let input of inputs.values()) {
-      var opt = document.createElement("option");
-      opt.text = input.name;
-      document.getElementById("inputportselector").add(opt);
-    }
+function onMIDISuccess( midiAccess ) {
+  console.log( "MIDI ready!" );
+  var input = midiAccess.inputs.entries.next();
+  if (input)
+    input.onmidimessage = echoMIDIMessage;
+  output = midiAccess.outputs.values().next().value;
+  if (!input || !output)
+    console.log("Uh oh! Couldn't get i/o ports.");
+}
+
+function onMIDIFailure(msg) {
+  console.log( "Failed to get MIDI access - " + msg );
+}
+
+navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
