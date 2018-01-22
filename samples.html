@@ -1,0 +1,462 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>White Noise II </title>
+  <meta name="description" content="A San Jose, Ca Synth Band.">
+  <meta name="author" content="Ted Pedersen">
+  <link rel="icon" href="http://whitenoise2.com/img/favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css?family=Bungee+Hairline" rel="stylesheet">
+  <link href="synth.css" rel="stylesheet">
+<!-- 
+  <link rel="stylesheet" href="/styles.css?v=1.0"> -->
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+
+<style>
+body{
+  background:url(static.gif) no-repeat center center fixed; 
+ -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 20px;
+ font-family: 'Bungee Hairline', cursive;
+ color: #fff;
+ margin: 0 auto;
+ text-align: center;
+}
+h1,h2{
+  color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000;
+ font-family: 'Bungee Hairline', cursive;
+}
+h1{
+  font-size: 4em
+}
+h2{
+  font-size: 2em;
+  font-weight: normal;
+}
+.centered{
+  margin: 0 auto;
+  text-align: center;
+}
+button{
+   font-family: 'Bungee Hairline', cursive;
+}
+hr{
+  padding: 0;
+  margin: 0;
+}
+video{
+  width: 100%;
+}
+select{
+  font-size: 1em;
+  font-family: 'Bungee Hairline', cursive;
+  font-weight: bold;
+}
+canvas{
+  padding: 20px 0;
+
+  margin: 0 auto;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/webmidi"></script>
+
+</head>
+
+<body>
+  <h1>WHITE NOISE II</h1>
+  <label for="oscType">Waveform:</label>
+  <select id="oscType" class="centered">
+ <option value="sine">Sine</option>
+ <option value="square">Square</option>
+ <option value="sawtooth">Saw</option>  
+  <option value="triangle">Triangle</option>    
+</select>
+
+
+  <hr />
+
+<div class="synth">
+  <button class="natural" id="cNote">C</button>
+  <button class="sharp" id="cNote2">#/b</button>
+  <button class="natural" id="dNote">D</button>
+  <button class="sharp" id="dNote2">#/b</button>
+  <button class="natural" id="eNote">E</button>
+  <button class="natural" id="fNote">F</button>
+  <button class="sharp" id="fNote2">#/b</button>
+  <button class="natural" id="gNote">G</button>
+  <button class="sharp" id="gNote2">#/b</button>
+  <button class="natural" id="aNote">A</button>
+  <button class="sharp" id="aNote2">#/b</button>
+  <button class="natural" id="bNote">B</button>
+</div>
+
+<!--    <pre></pre>
+   <video></video> -->
+<canvas id="canvas" height="300" width="800"></canvas>
+
+
+
+
+</body>
+<script>
+
+
+
+// only one of these!
+winwidth=document.all?document.body.clientWidth:window.innerWidth; 
+winHeight=document.all?document.body.clientHeight:window.innerHeight;
+var context = new (window.AudioContext || window.webkitAudioContext)();
+var analyser = context.createAnalyser();
+var WIDTH = 800;
+var HEIGHT = 300;
+
+
+document.getElementById("canvas").style.width = winwidth;
+console.log(winwidth)
+
+document.getElementById("cNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 261.63; // Hz
+osc.frequency.value = 261.63; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current 
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+
+}
+
+document.getElementById("cNote2").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 277.18; // Hz
+osc.frequency.value = 277.18; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current 
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+}
+
+document.getElementById("dNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 293.66; // Hz
+osc.frequency.value = 293.66; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+
+}
+
+document.getElementById("dNote2").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 311.13; // Hz
+osc.frequency.value = 311.13; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+}
+
+document.getElementById("eNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 329.63; // Hz
+osc.frequency.value = 329.63; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+}
+
+document.getElementById("fNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 349.23; // Hz
+osc.frequency.value = 349.23; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw(); 
+}
+
+
+document.getElementById("fNote2").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 369.99; // Hz
+osc.frequency.value = 369.99; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+}
+
+document.getElementById("gNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 392.00; // Hz
+osc.frequency.value = 392.00; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw(); 
+}
+
+document.getElementById("gNote2").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 415.30; // Hz
+osc.frequency.value = 415.30; // Hz
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current 
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+}
+
+document.getElementById("aNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 440.00; // Hz
+osc.frequency.value = 440.00; // Hz 
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw(); 
+}
+
+document.getElementById("aNote2").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 466.16; // Hz
+osc.frequency.value = 466.16; // Hz 
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current 
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw();
+}
+
+document.getElementById("bNote").onclick = function () { 
+var osc = context.createOscillator(); // instantiate an oscillator
+osc.type =  document.getElementById("oscType").value;
+osc.frequency.setValueAtTime = 493.88; // Hz
+osc.frequency.value = 493.88; // Hz 
+osc.connect(context.destination); // connect it to the destination
+osc.start(); // start the oscillator
+osc.stop(context.currentTime + .5); // stop 2 seconds after the current
+    osc.connect(analyser); /*Connect oscillator to analyser node*/
+    analyser.connect(context.destination)
+    draw(); 
+}
+
+var canvas = document.getElementById('canvas');
+var myCanvas = canvas.getContext('2d');
+console.log(myCanvas);
+
+analyser.fftSize = 2048;
+
+var bufferLength = analyser.frequencyBinCount; 
+/*an unsigned long value half that of the FFT size. This generally equates to 
+the number of data values you will have to play with for the visualization*/
+
+var dataArray = new Uint8Array(bufferLength);
+
+myCanvas.clearRect(0, 0, WIDTH, HEIGHT);
+
+function draw() {
+  drawVisual = requestAnimationFrame(draw);
+  
+  analyser.getByteTimeDomainData(dataArray);
+  
+  myCanvas.fillStyle = "#000000";
+  myCanvas.fillRect(0, 0, WIDTH, HEIGHT);
+  myCanvas.lineWidth = 10;
+  myCanvas.strokeStyle = "#fff";
+  myCanvas.beginPath();
+  
+  var sliceWidth = WIDTH * 1.0 / bufferLength;
+  var x = 0;
+  
+  for(var i = 0; i < bufferLength; i++) {
+   
+        var v = dataArray[i] / 128.0;
+        var y = v * HEIGHT/2;
+
+        if(i === 0) {
+          myCanvas.moveTo(x, y);
+        } else {
+          myCanvas.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+      };
+  
+  myCanvas.lineTo(canvas.width, canvas.height/2);
+      myCanvas.stroke();
+};
+
+
+
+
+
+// Play mp3 sounds
+
+// document.getElementById("cNote").onclick = function () { 
+//         var path = "mp3/c1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("cNote2").onclick = function () { 
+//         var path = "mp3/c1s.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("dNote").onclick = function () { 
+//         var path = "mp3/d1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("dNote2").onclick = function () { 
+//         var path = "mp3/d1s.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("eNote").onclick = function () { 
+//         var path = "mp3/e1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("fNote").onclick = function () { 
+//         var path = "mp3/f1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("fNote2").onclick = function () { 
+//         var path = "mp3/f1s.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("gNote").onclick = function () { 
+//         var path = "mp3/g1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("gNote2").onclick = function () { 
+//         var path = "mp3/g1s.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("aNote").onclick = function () { 
+//         var path = "mp3/a1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("aNote2").onclick = function () { 
+//         var path = "mp3/a1s.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+// document.getElementById("bNote").onclick = function () { 
+//         var path = "mp3/b1.mp3"
+//         var snd = new Audio(path);
+//         snd.play();
+// }
+
+// if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+//  alert("White Noise II Mobile Experience Best Viewed In Portrait Mode");
+// }
+
+// var pre = document.querySelector('pre');
+// var video = document.querySelector('video');
+// var myScript = document.querySelector('script');
+// var range = document.querySelector('input');
+
+// // getUserMedia block - grab stream
+// // put it into a MediaStreamAudioSourceNode
+// // also output the visuals into a video element
+
+// if (navigator.mediaDevices) {
+//     console.log('getUserMedia supported.');
+//     navigator.mediaDevices.getUserMedia ({audio: true, video: true})
+//     .then(function(stream) {
+//         video.srcObject = stream;
+//         video.onloadedmetadata = function(e) {
+//             video.play();
+//             video.muted = true;
+//         };
+
+//         // Create a MediaStreamAudioSourceNode
+//         // Feed the HTMLMediaElement into it
+//         var audioCtx = new AudioContext();
+//         var source = audioCtx.createMediaStreamSource(stream);
+
+//         // Create a biquadfilter
+//         var biquadFilter = audioCtx.createBiquadFilter();
+//         biquadFilter.type = "lowshelf";
+//         biquadFilter.frequency.value = 1000;
+//         biquadFilter.gain.value = range.value;
+
+//         // connect the AudioBufferSourceNode to the gainNode
+//         // and the gainNode to the destination, so we can play the
+//         // music and adjust the volume using the mouse cursor
+//         source.connect(biquadFilter);
+//         biquadFilter.connect(audioCtx.destination);
+
+//         // Get new mouse pointer coordinates when mouse is moved
+//         // then set new gain value
+
+//         range.oninput = function() {
+//             biquadFilter.gain.value = range.value;
+//         }
+//     })
+//     .catch(function(err) {
+//         console.log('The following gUM error occured: ' + err);
+//     });
+// } else {
+//    console.log('getUserMedia not supported on your browser!');
+// }
+
+// // dump script to pre element
+
+// pre.innerHTML = myScript.innerHTML;
+
+
+
+</script>
+</html>
